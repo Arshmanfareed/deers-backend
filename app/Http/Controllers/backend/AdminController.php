@@ -5,6 +5,7 @@ namespace App\Http\Controllers\backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Middleware\AdminMiddleware;
+use App\Models\Departments;
 
 class AdminController extends Controller
 {
@@ -41,29 +42,6 @@ class AdminController extends Controller
 
         return view('backend.add-member' ,$data);
     }
-
-
-    public function departments()
-    {
-        $data  = [
-
-            'title' => ' Departments | Deers Admin Dashboard'
-        ];
-
-        return view('backend.departments' ,$data);
-    }
-
-
-    public function add_departments()
-    {
-        $data  = [
-
-            'title' => ' Add Departments | Deers Admin Dashboard'
-        ];
-
-        return view('backend.add-department' ,$data);
-    }
-
 
 
     public function add_appointments()
