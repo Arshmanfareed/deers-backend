@@ -17,4 +17,4 @@ jobs:
         server: ftp.staging.designinternal.com
         username: staging@deers.staging.designinternal.com
         password: d?jV3)k3Y^NQ
-        server-dir: public_html/deers.staging.designinternal.com
+        server-dir: /public_html/deers.staging.designinternal.com/
