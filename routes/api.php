@@ -10,4 +10,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('app-register', [App\Http\Controllers\Auth\RegisterController::class, 'apiRegister']);
 Route::post('app-login', [App\Http\Controllers\Auth\LoginController::class, 'appLogin']);
+// Route::post('app-login', [App\Http\Controllers\Auth\LoginController::class, 'appLogin']);
 
