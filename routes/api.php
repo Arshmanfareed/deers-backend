@@ -14,7 +14,7 @@ Route::post('app-login', [App\Http\Controllers\Auth\LoginController::class, 'app
 Route::post('upload-document', [App\Http\Controllers\backend\DocumentController::class, 'upload']);
 
 Route::get('/app-departments', [App\Http\Controllers\backend\DepartmentController::class, 'appDepartments']);
-// Route::get('/add-department', [App\Http\Controllers\backend\DepartmentController::class, 'add_departments']);
+Route::get('/add-department', [App\Http\Controllers\backend\DepartmentController::class, 'add_departments']);
 // Route::post('/add-department-submit', [App\Http\Controllers\backend\DepartmentController::class, 'add_departments_submit']);
 // Route::get('/departments/{department}/edit', [App\Http\Controllers\backend\DepartmentController::class, 'edit_departments']);
 // Route::post('departments/edit/{department}', [App\Http\Controllers\backend\DepartmentController::class, 'edit_departments_submit']);
