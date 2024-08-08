@@ -48,7 +48,7 @@
                                 <tr>
                                     <td>
                                         <div class="user_col">
-                                            {{--                                    <img class="thumb" src="{{asset('dashboard_assets/images/civilian_dept.png')}}" alt="">--}}
+                                            {{--  <img class="thumb" src="{{asset('dashboard_assets/images/civilian_dept.png')}}" alt="">--}}
                                             {{$all_departments->name}}
                                         </div>
                                     </td>
@@ -67,10 +67,17 @@
                                         <a href="javascript:;" class="action_link">
                                             <img src="{{asset('dashboard_assets/images/icon_action.png')}}" alt="">
                                         </a>
-                                        <div class="actions">
-{{--                                            <a href="javascript:;" class="viiew"><span class="icon"><i class="fa-solid fa-eye"></i></span>View</a>--}}
-                                            <a href="{{route('edit_departments',['id'=>$all_departments->id])}}" class="edit"><span class="icon"><i class="fa-solid fa-pen-to-square"></i></span>Edit</a>
-                                            <a href="javascript:;" class="delete"><span class="icon"><i class="fa-solid fa-trash"></i></span>Delete</a>
+                                        <div class="actions">                                            
+                                            <a href="{{ route('edit_departments', ['department' => $all_departments->id]) }}" class="edit">
+                                                <span class="icon"><i class="fa-solid fa-pen-to-square"></i></span>Edit
+                                            </a>
+                                            <form action="{{ route('departments.destroy', ['department' => $all_departments->id]) }}" method="POST" style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="delete" style="background:none; border:none; cursor:pointer;">
+                                                    <span class="icon"><i class="fa-solid fa-trash"></i></span>Delete
+                                                </button>
+                                            </form>                                        
                                         </div>
                                     </td>
                                 </tr>

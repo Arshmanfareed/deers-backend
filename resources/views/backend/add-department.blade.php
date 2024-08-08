@@ -11,7 +11,7 @@
                 <div class="add_member bg_shade">
                     <form action="{{route('add_departments_submit')}}" method="post" class="form" autocomplete="off" id="add_departments">
                         <div class="top_add">
-                            <a href="javascript:;" class="btn_back">
+                            <a href="{{route('departments')}}" class="btn_back">
                                 <img src="{{asset('dashboard_assets/images/icon_left.png')}}" alt="">
                             </a>
                             <div class="ext">

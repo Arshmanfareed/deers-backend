@@ -78,7 +78,7 @@
 			<div class="profile">
 				<a href="javascript:;" class="user_link">
 					<img class="thumb" src="{{asset('dashboard_assets/images/user.png')}}" alt="">
-					<span class="txt">Jhon Doe</span>
+					<span class="txt">Super Admin</span>
 					<span class="icon">
 						<img src="{{asset('dashboard_assets/images/down_arrow.png')}}" alt="">
 					</span>

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use App\Models\Departments;
+
 
 
 class User extends Authenticatable implements JWTSubject
@@ -20,11 +22,15 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $fillable = [
         'id',
+        'first_name',
+        'last_name',
         'name',
         'email',
         'password',
         'role',
-        'department_id'
+        'department_id',
+        'status',      
+        'phone_number',
     ];
 
     /**
@@ -49,9 +55,13 @@ class User extends Authenticatable implements JWTSubject
             'password' => 'hashed',
         ];
     }
-    public function departments()
+    public function department()
     {
-        return $this->belongsTo(Departments::class);
+        return $this->belongsTo(Departments::class, 'department_id');
+    }
+    public function documents()
+    {
+        return $this->hasMany(Document::class);
     }
 
     public function getJWTIdentifier()

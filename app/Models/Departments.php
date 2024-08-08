@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class Departments extends Model
 {
@@ -17,6 +18,8 @@ class Departments extends Model
         'phone',
         'email',
         'status',
+        'user_role',
+        'user_id',
     ];
 
     public function members()
