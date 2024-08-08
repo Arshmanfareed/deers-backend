@@ -9,6 +9,11 @@
             </div>
             <div class="col-12 col-md-10">
                 <div class="member_area bg_shade">
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
                     <div class="top_opt">
                         <h2 class="sec_head ft_oswlad">Members</h2>
                         <a href="{{route('add_members')}}" class="btn_custom add_member">Add New Member</a>
@@ -17,8 +22,8 @@
                         <thead>
                         <tr>
                             <th>Member</th>
+                            <th>Email</th>
                             <th>Department</th>
-                            <th>Career Level</th>
                             <th>Created Date</th>
                             <th>Status</th>
                             <th>Action</th>
@@ -26,381 +31,54 @@
                         </thead>
 
                         <tbody>
+                        @foreach($all_users as $member)
+                            @if($member->role != 'admin')
+                                <tr>
+                                    <td>
+                                        <div class="user_col">
+                                            <img class="thumb" src="{{asset('dashboard_assets/images/thumb.png')}}" alt="">
+                                            {{$member->name }}
+                                        </div>
+                                    </td>
+                                    <td>{{$member->email }}</td>
+                                    <td>
+                                        @if (isset($member['department']))
+                                            {{ $member['department']->name }}
+                                        @else
+                                            No Department
+                                        @endif
+                                    </td>
+                                    <td>{{$member->created_at->format('Y-m-d') }}</td>
+                                    <td>
+                                        @if($member->status === 'active')
+                                            <div class="status green">Active</div>
+                                        @elseif($member->status === 'inactive')
+                                            <div class="status red">In Active</div>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <a href="javascript:;" class="action_link">
+                                            <img src="{{asset('dashboard_assets/images/icon_action.png')}}" alt="">
+                                        </a>
+                                        <div class="actions">
+                                            <!-- <a href="javascript:;" class="viiew"><span class="icon"><i class="fa-solid fa-eye"></i></span>View</a> -->
+                                            <a href="{{ route('edit_members', ['user' => $member->id]) }}" class="edit"><span class="icon"><i class="fa-solid fa-pen-to-square"></i></span>Edit</a>
+                                            
+                                            <!-- <a href="javascript:;" class="delete"><span class="icon"><i class="fa-solid fa-trash"></i></span>Delete</a> -->
+                                            <form action="{{ route('members.destroy', ['user' => $member->id]) }}" method="POST" style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="delete" style="background:none; border:none; cursor:pointer;">
+                                                    <span class="icon"><i class="fa-solid fa-trash"></i></span>Delete
+                                                </button>
+                                            </form>  
+                                        </div>
+                                    </td>                           
+                                </tr>
+                            @endif
+                        @endforeach
 
-                        <tr>
-                            <td>
-                                <div class="user_col">
-                                    <img class="thumb" src="{{asset('dashboard_assets/images/thumb.png')}}" alt="">
-                                    Lorem ipsum dolor sit amet
-                                </div>
-                            </td>
-                            <td>Health</td>
-                            <td>Lorem Ipsum</td>
-                            <td>33 - 19 - 1</td>
-                            <td>
-                                <div class="status green">Active</div>
-                            </td>
-                            <td>
-                                <a href="javascript:;" class="action_link">
-                                    <img src="{{asset('dashboard_assets/images/icon_action.png')}}" alt="">
-                                </a>
-                                <div class="actions">
-                                    <a href="javascript:;" class="viiew"><span class="icon"><i class="fa-solid fa-eye"></i></span>View</a>
-                                    <a href="javascript:;" class="edit"><span class="icon"><i class="fa-solid fa-pen-to-square"></i></span>Edit</a>
-                                    <a href="javascript:;" class="delete"><span class="icon"><i class="fa-solid fa-trash"></i></span>Delete</a>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <div class="user_col">
-                                    <img class="thumb" src="{{asset('dashboard_assets/images/thumb_1.png')}}" alt="">
-                                    Lorem ipsum dolor sit amet
-                                </div>
-                            </td>
-                            <td>Defense</td>
-                            <td>Lorem Ipsum</td>
-                            <td>33 - 19 - 1</td>
-                            <td>
-                                <div class="status green">Active</div>
-                            </td>
-                            <td>
-                                <a href="javascript:;" class="action_link">
-                                    <img src="{{asset('dashboard_assets/images/icon_action.png')}}" alt="">
-                                </a>
-                                <div class="actions">
-                                    <a href="javascript:;" class="viiew"><span class="icon"><i class="fa-solid fa-eye"></i></span>View</a>
-                                    <a href="javascript:;" class="edit"><span class="icon"><i class="fa-solid fa-pen-to-square"></i></span>Edit</a>
-                                    <a href="javascript:;" class="delete"><span class="icon"><i class="fa-solid fa-trash"></i></span>Delete</a>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <div class="user_col">
-                                    <img class="thumb" src="{{asset('dashboard_assets/images/thumb_2.png')}}" alt="">
-                                    Lorem ipsum dolor sit amet
-                                </div>
-                            </td>
-                            <td>Defense</td>
-                            <td>Lorem Ipsum</td>
-                            <td>33 - 19 - 1</td>
-                            <td>
-                                <div class="status green">Active</div>
-                            </td>
-                            <td>
-                                <a href="javascript:;" class="action_link">
-                                    <img src="{{asset('dashboard_assets/images/icon_action.png')}}" alt="">
-                                </a>
-                                <div class="actions">
-                                    <a href="javascript:;" class="viiew"><span class="icon"><i class="fa-solid fa-eye"></i></span>View</a>
-                                    <a href="javascript:;" class="edit"><span class="icon"><i class="fa-solid fa-pen-to-square"></i></span>Edit</a>
-                                    <a href="javascript:;" class="delete"><span class="icon"><i class="fa-solid fa-trash"></i></span>Delete</a>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <div class="user_col">
-                                    <img class="thumb" src="{{asset('dashboard_assets/images/thumb_3.png')}}" alt="">
-                                    Lorem ipsum dolor sit amet
-                                </div>
-                            </td>
-                            <td>Defense</td>
-                            <td>Lorem Ipsum</td>
-                            <td>33 - 19 - 1</td>
-                            <td>
-                                <div class="status green">Active</div>
-                            </td>
-                            <td>
-                                <a href="javascript:;" class="action_link">
-                                    <img src="{{asset('dashboard_assets/images/icon_action.png')}}" alt="">
-                                </a>
-                                <div class="actions">
-                                    <a href="javascript:;" class="viiew"><span class="icon"><i class="fa-solid fa-eye"></i></span>View</a>
-                                    <a href="javascript:;" class="edit"><span class="icon"><i class="fa-solid fa-pen-to-square"></i></span>Edit</a>
-                                    <a href="javascript:;" class="delete"><span class="icon"><i class="fa-solid fa-trash"></i></span>Delete</a>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <div class="user_col">
-                                    <img class="thumb" src="{{asset('dashboard_assets/images/thumb_4.png')}}" alt="">
-                                    Lorem ipsum dolor sit amet
-                                </div>
-                            </td>
-                            <td>Civilian Pay</td>
-                            <td>Lorem Ipsum</td>
-                            <td>33 - 19 - 1</td>
-                            <td>
-                                <div class="status green">Active</div>
-                            </td>
-                            <td>
-                                <a href="javascript:;" class="action_link">
-                                    <img src="{{asset('dashboard_assets/images/icon_action.png')}}" alt="">
-                                </a>
-                                <div class="actions">
-                                    <a href="javascript:;" class="viiew"><span class="icon"><i class="fa-solid fa-eye"></i></span>View</a>
-                                    <a href="javascript:;" class="edit"><span class="icon"><i class="fa-solid fa-pen-to-square"></i></span>Edit</a>
-                                    <a href="javascript:;" class="delete"><span class="icon"><i class="fa-solid fa-trash"></i></span>Delete</a>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <div class="user_col">
-                                    <img class="thumb" src="{{asset('dashboard_assets/images/thumb_5.png')}}" alt="">
-                                    Lorem ipsum dolor sit amet
-                                </div>
-                            </td>
-                            <td>Civilian Pay</td>
-                            <td>Lorem Ipsum</td>
-                            <td>33 - 19 - 1</td>
-                            <td>
-                                <div class="status green">Active</div>
-                            </td>
-                            <td>
-                                <a href="javascript:;" class="action_link">
-                                    <img src="{{asset('dashboard_assets/images/icon_action.png')}}" alt="">
-                                </a>
-                                <div class="actions">
-                                    <a href="javascript:;" class="viiew"><span class="icon"><i class="fa-solid fa-eye"></i></span>View</a>
-                                    <a href="javascript:;" class="edit"><span class="icon"><i class="fa-solid fa-pen-to-square"></i></span>Edit</a>
-                                    <a href="javascript:;" class="delete"><span class="icon"><i class="fa-solid fa-trash"></i></span>Delete</a>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <div class="user_col">
-                                    <img class="thumb" src="{{asset('dashboard_assets/images/thumb_6.png')}}" alt="">
-                                    Lorem ipsum dolor sit amet
-                                </div>
-                            </td>
-                            <td>Health</td>
-                            <td>Lorem Ipsum</td>
-                            <td>33 - 19 - 1</td>
-                            <td>
-                                <div class="status green">Active</div>
-                            </td>
-                            <td>
-                                <a href="javascript:;" class="action_link">
-                                    <img src="{{asset('dashboard_assets/images/icon_action.png')}}" alt="">
-                                </a>
-                                <div class="actions">
-                                    <a href="javascript:;" class="viiew"><span class="icon"><i class="fa-solid fa-eye"></i></span>View</a>
-                                    <a href="javascript:;" class="edit"><span class="icon"><i class="fa-solid fa-pen-to-square"></i></span>Edit</a>
-                                    <a href="javascript:;" class="delete"><span class="icon"><i class="fa-solid fa-trash"></i></span>Delete</a>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <div class="user_col">
-                                    <img class="thumb" src="{{asset('dashboard_assets/images/thumb_7.png')}}" alt="">
-                                    Lorem ipsum dolor sit amet
-                                </div>
-                            </td>
-                            <td>Civilian Pay</td>
-                            <td>Lorem Ipsum</td>
-                            <td>33 - 19 - 1</td>
-                            <td>
-                                <div class="status green">Active</div>
-                            </td>
-                            <td>
-                                <a href="javascript:;" class="action_link">
-                                    <img src="{{asset('dashboard_assets/images/icon_action.png')}}" alt="">
-                                </a>
-                                <div class="actions">
-                                    <a href="javascript:;" class="viiew"><span class="icon"><i class="fa-solid fa-eye"></i></span>View</a>
-                                    <a href="javascript:;" class="edit"><span class="icon"><i class="fa-solid fa-pen-to-square"></i></span>Edit</a>
-                                    <a href="javascript:;" class="delete"><span class="icon"><i class="fa-solid fa-trash"></i></span>Delete</a>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <div class="user_col">
-                                    <img class="thumb" src="{{asset('dashboard_assets/images/thumb_8.png')}}" alt="">
-                                    Lorem ipsum dolor sit amet
-                                </div>
-                            </td>
-                            <td>Verifaction</td>
-                            <td>Lorem Ipsum</td>
-                            <td>33 - 19 - 1</td>
-                            <td>
-                                <div class="status green">Active</div>
-                            </td>
-                            <td>
-                                <a href="javascript:;" class="action_link">
-                                    <img src="{{asset('dashboard_assets/images/icon_action.png')}}" alt="">
-                                </a>
-                                <div class="actions">
-                                    <a href="javascript:;" class="viiew"><span class="icon"><i class="fa-solid fa-eye"></i></span>View</a>
-                                    <a href="javascript:;" class="edit"><span class="icon"><i class="fa-solid fa-pen-to-square"></i></span>Edit</a>
-                                    <a href="javascript:;" class="delete"><span class="icon"><i class="fa-solid fa-trash"></i></span>Delete</a>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <div class="user_col">
-                                    <img class="thumb" src="{{asset('dashboard_assets/images/thumb_9.png')}}" alt="">
-                                    Lorem ipsum dolor sit amet
-                                </div>
-                            </td>
-                            <td>Verifaction</td>
-                            <td>Lorem Ipsum</td>
-                            <td>33 - 19 - 1</td>
-                            <td>
-                                <div class="status green">Active</div>
-                            </td>
-                            <td>
-                                <a href="javascript:;" class="action_link">
-                                    <img src="{{asset('dashboard_assets/images/icon_action.png')}}" alt="">
-                                </a>
-                                <div class="actions">
-                                    <a href="javascript:;" class="viiew"><span class="icon"><i class="fa-solid fa-eye"></i></span>View</a>
-                                    <a href="javascript:;" class="edit"><span class="icon"><i class="fa-solid fa-pen-to-square"></i></span>Edit</a>
-                                    <a href="javascript:;" class="delete"><span class="icon"><i class="fa-solid fa-trash"></i></span>Delete</a>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <div class="user_col">
-                                    <img class="thumb" src="{{asset('dashboard_assets/images/thumb_10.png')}}" alt="">
-                                    Lorem ipsum dolor sit amet
-                                </div>
-                            </td>
-                            <td>Verifaction</td>
-                            <td>Lorem Ipsum</td>
-                            <td>33 - 19 - 1</td>
-                            <td>
-                                <div class="status green">Active</div>
-                            </td>
-                            <td>
-                                <a href="javascript:;" class="action_link">
-                                    <img src="{{asset('dashboard_assets/images/icon_action.png')}}" alt="">
-                                </a>
-                                <div class="actions">
-                                    <a href="javascript:;" class="viiew"><span class="icon"><i class="fa-solid fa-eye"></i></span>View</a>
-                                    <a href="javascript:;" class="edit"><span class="icon"><i class="fa-solid fa-pen-to-square"></i></span>Edit</a>
-                                    <a href="javascript:;" class="delete"><span class="icon"><i class="fa-solid fa-trash"></i></span>Delete</a>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <div class="user_col">
-                                    <img class="thumb" src="{{asset('dashboard_assets/images/thumb.png')}}" alt="">
-                                    Lorem ipsum dolor sit amet
-                                </div>
-                            </td>
-                            <td>Health</td>
-                            <td>Lorem Ipsum</td>
-                            <td>33 - 19 - 1</td>
-                            <td>
-                                <div class="status green">Active</div>
-                            </td>
-                            <td>
-                                <a href="javascript:;" class="action_link">
-                                    <img src="{{asset('dashboard_assets/images/icon_action.png')}}" alt="">
-                                </a>
-                                <div class="actions">
-                                    <a href="javascript:;" class="viiew"><span class="icon"><i class="fa-solid fa-eye"></i></span>View</a>
-                                    <a href="javascript:;" class="edit"><span class="icon"><i class="fa-solid fa-pen-to-square"></i></span>Edit</a>
-                                    <a href="javascript:;" class="delete"><span class="icon"><i class="fa-solid fa-trash"></i></span>Delete</a>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <div class="user_col">
-                                    <img class="thumb" src="{{asset('dashboard_assets/images/thumb_1.png')}}" alt="">
-                                    Lorem ipsum dolor sit amet
-                                </div>
-                            </td>
-                            <td>Defense</td>
-                            <td>Lorem Ipsum</td>
-                            <td>33 - 19 - 1</td>
-                            <td>
-                                <div class="status green">Active</div>
-                            </td>
-                            <td>
-                                <a href="javascript:;" class="action_link">
-                                    <img src="{{asset('dashboard_assets/images/icon_action.png')}}" alt="">
-                                </a>
-                                <div class="actions">
-                                    <a href="javascript:;" class="viiew"><span class="icon"><i class="fa-solid fa-eye"></i></span>View</a>
-                                    <a href="javascript:;" class="edit"><span class="icon"><i class="fa-solid fa-pen-to-square"></i></span>Edit</a>
-                                    <a href="javascript:;" class="delete"><span class="icon"><i class="fa-solid fa-trash"></i></span>Delete</a>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <div class="user_col">
-                                    <img class="thumb" src="{{asset('dashboard_assets/images/thumb_2.png')}}" alt="">
-                                    Lorem ipsum dolor sit amet
-                                </div>
-                            </td>
-                            <td>Defense</td>
-                            <td>Lorem Ipsum</td>
-                            <td>33 - 19 - 1</td>
-                            <td>
-                                <div class="status green">Active</div>
-                            </td>
-                            <td>
-                                <a href="javascript:;" class="action_link">
-                                    <img src="{{asset('dashboard_assets/images/icon_action.png')}}" alt="">
-                                </a>
-                                <div class="actions">
-                                    <a href="javascript:;" class="viiew"><span class="icon"><i class="fa-solid fa-eye"></i></span>View</a>
-                                    <a href="javascript:;" class="edit"><span class="icon"><i class="fa-solid fa-pen-to-square"></i></span>Edit</a>
-                                    <a href="javascript:;" class="delete"><span class="icon"><i class="fa-solid fa-trash"></i></span>Delete</a>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <div class="user_col">
-                                    <img class="thumb" src="{{asset('dashboard_assets/images/thumb_3.png')}}" alt="">
-                                    Lorem ipsum dolor sit amet
-                                </div>
-                            </td>
-                            <td>Defense</td>
-                            <td>Lorem Ipsum</td>
-                            <td>33 - 19 - 1</td>
-                            <td>
-                                <div class="status green">Active</div>
-                            </td>
-                            <td>
-                                <a href="javascript:;" class="action_link">
-                                    <img src="{{asset('dashboard_assets/images/icon_action.png')}}" alt="">
-                                </a>
-                                <div class="actions">
-                                    <a href="javascript:;" class="viiew"><span class="icon"><i class="fa-solid fa-eye"></i></span>View</a>
-                                    <a href="javascript:;" class="edit"><span class="icon"><i class="fa-solid fa-pen-to-square"></i></span>Edit</a>
-                                    <a href="javascript:;" class="delete"><span class="icon"><i class="fa-solid fa-trash"></i></span>Delete</a>
-                                </div>
-                            </td>
-                        </tr>
+                        
                         </tbody>
 
                     </table>
