@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use App\Models\Departments;
+use App\Models\Appointment;
 
 
 
@@ -62,6 +63,10 @@ class User extends Authenticatable implements JWTSubject
     public function documents()
     {
         return $this->hasMany(Document::class);
+    }
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
     }
 
     public function getJWTIdentifier()

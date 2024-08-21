@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Models\Appointment;
+use App\Models\TimeSlot;
 
 class Departments extends Model
 {
@@ -25,5 +27,13 @@ class Departments extends Model
     public function members()
     {
         return $this->hasMany(User::class, 'department_id');
+    }
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
+    }
+    public function timeSlots()
+    {
+        return $this->hasMany(TimeSlot::class);
     }
 }

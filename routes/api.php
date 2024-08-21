@@ -2,6 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\backend\AppointmentController;
+use App\Http\Controllers\backend\DepartmentController;
+
 
 
 // Route::get('/user', function (Request $request) {
@@ -13,11 +16,6 @@ Route::post('app-register', [App\Http\Controllers\Auth\RegisterController::class
 Route::post('app-login', [App\Http\Controllers\Auth\LoginController::class, 'appLogin']);
 Route::post('upload-document', [App\Http\Controllers\backend\DocumentController::class, 'upload']);
 
-Route::get('/app-departments', [App\Http\Controllers\backend\DepartmentController::class, 'appDepartments']);
-Route::get('/add-department', [App\Http\Controllers\backend\DepartmentController::class, 'add_departments']);
-// Route::post('/add-department-submit', [App\Http\Controllers\backend\DepartmentController::class, 'add_departments_submit']);
-// Route::get('/departments/{department}/edit', [App\Http\Controllers\backend\DepartmentController::class, 'edit_departments']);
-// Route::post('departments/edit/{department}', [App\Http\Controllers\backend\DepartmentController::class, 'edit_departments_submit']);
-// Route::delete('/departments/{department}', [App\Http\Controllers\backend\DepartmentController::class, 'destroy']);
-
-// // Route::post('app-login', [App\Http\Controllers\Auth\LoginController::class, 'appLogin']);
+Route::get('app-departments', [AppointmentController::class, 'appDepartments']);
+Route::apiResource('appointments', AppointmentController::class);
+Route::get('/departments/{id}/availability/{date}', [AppointmentController::class, 'checkAvailability']);

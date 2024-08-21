@@ -33,18 +33,17 @@
 
                     <table class="dt_table table table-bordered table-hover dt-responsive">
                         <thead>
-                        <tr>
-                            <th>Departments Name</th>
-                            <th>Created Date</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
+                            <tr>
+                                <th>Departments Name</th>
+                                <th>Created Date</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
                         </thead>
 
                         <tbody>
 
                             @foreach($all_data as $key => $all_departments)
-
                                 <tr>
                                     <td>
                                         <div class="user_col">
