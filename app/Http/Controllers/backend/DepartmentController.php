@@ -57,6 +57,14 @@ class DepartmentController extends Controller
 
         $data = $request->all();
 
+        $userCoordinates = $this->getCoordinatesFromLocation($request->address);
+        list($latitude, $longitude) = $userCoordinates;
+
+        $data['latitude'] = $latitude;
+        $data['longitude'] = $longitude;
+
+        // dd($userCoordinates);
+
         if ($request->user()->role == 'admin') {
             $data['user_role'] = 'admin';
         } elseif ($request->user()->role == 'user_interface') {
@@ -89,6 +97,33 @@ class DepartmentController extends Controller
 
         return redirect()->route('departments')->with('success', 'Department added successfully');
     }
+
+    private function getCoordinatesFromLocation($location)
+    {
+        $apiKey = 'AIzaSyAF9q3rW1aL52AJ_Yy2KIYVKQyjNn7PLIs';
+        $url = "https://maps.googleapis.com/maps/api/geocode/json?address=".urlencode($location)."&key=".$apiKey;
+
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Optional, depends on your server configuration
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        // $response = file_get_contents($url);
+
+        $json = json_decode($response, true);
+
+        if ($json['status'] == 'OK') {
+            $coordinates = $json['results'][0]['geometry']['location'];
+            return [$coordinates['lat'], $coordinates['lng']];
+        }
+
+        return null;
+    }
+
 
     protected function generateTimeSlots($duration)
     {

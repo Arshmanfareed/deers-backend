@@ -138,5 +138,16 @@
         </div>
     </div>
 </section>
-    </div>
+</div>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAF9q3rW1aL52AJ_Yy2KIYVKQyjNn7PLIs&libraries=places&callback=initMap" defer ></script>
+
+<script>
+    async function AutoFill() {
+            const fromInput = document.getElementById('address');
+            const fromAutocomplete = new google.maps.places.Autocomplete(fromInput);
+        }
+
+        window.onload = AutoFill;
+</script>
 @endsection

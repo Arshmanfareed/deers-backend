@@ -22,6 +22,8 @@ class Departments extends Model
         'status',
         'user_role',
         'user_id',
+        'latitude',
+        'longitude',
     ];
 
     public function members()
