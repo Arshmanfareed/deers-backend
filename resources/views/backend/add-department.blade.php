@@ -75,6 +75,52 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
+                                    <h4>Add Time Slots</h4>
+                                </div>
+                                <!-- Select Days Field -->
+                                <div class="col-6">
+                                    <div class="field drop_down">
+                                        <label for="days">Select Days Start</label>
+                                        <select class="form-control" name="start_days" id="days"  required>
+                                            <option value="Monday">Monday</option>
+                                            <option value="Tuesday">Tuesday</option>
+                                            <option value="Wednesday">Wednesday</option>
+                                            <option value="Thursday">Thursday</option>
+                                            <option value="Friday">Friday</option>
+                                        </select>
+                                        @error('days')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="field drop_down">
+                                        <label for="end_days">Select Days End</label>
+                                        <select class="form-control" name="end_days" id="end_days"  required>
+                                            <option value="Monday">Monday</option>
+                                            <option value="Tuesday">Tuesday</option>
+                                            <option value="Wednesday">Wednesday</option>
+                                            <option value="Thursday">Thursday</option>
+                                            <option value="Friday">Friday</option>
+                                        </select>
+                                        @error('days')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <!-- Appointment Duration Field -->
+                                <div class="col-12">
+                                    <div class="field">
+                                        <label for="duration">Appointment Duration (minutes)</label>
+                                        <input type="number" class="form-control" id="duration" name="duration" placeholder="Enter duration in minutes" required>
+                                        @error('duration')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12">
                                     <div class="field d-flex">
                                         <p>Status</p>
                                         <label class="switch">
@@ -92,5 +138,16 @@
         </div>
     </div>
 </section>
-    </div>
+</div>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAF9q3rW1aL52AJ_Yy2KIYVKQyjNn7PLIs&libraries=places&callback=initMap" defer ></script>
+
+<script>
+    async function AutoFill() {
+            const fromInput = document.getElementById('address');
+            const fromAutocomplete = new google.maps.places.Autocomplete(fromInput);
+        }
+
+        window.onload = AutoFill;
+</script>
 @endsection
