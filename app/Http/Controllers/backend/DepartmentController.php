@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-// use App\Http\Middleware\AdminMiddleware;
 use App\Models\Departments;
 use App\Models\TimeSlot;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+
+// use App\Http\Middleware\AdminMiddleware;
 
 class DepartmentController extends Controller
 {
@@ -29,7 +30,7 @@ class DepartmentController extends Controller
         return view('backend.departments' ,$data, compact('all_data'));
     }
 
-  
+
 
 
     public function add_departments()
@@ -133,7 +134,7 @@ class DepartmentController extends Controller
 
         while ($startTime->lessThan($endTime)) {
             $endSlotTime = $startTime->copy()->addMinutes($duration);
-            
+
             if ($endSlotTime->greaterThan($endTime)) {
                 break;
             }
@@ -180,12 +181,12 @@ class DepartmentController extends Controller
             'city' => 'required',
             'address' => 'required',
             'phone' => 'required',
-            'email' => 'required|email',            
+            'email' => 'required|email',
         ]);
 
         $data = $request->all();
 
-        
+
         if(!$request->has('status')){
             $data['status'] = 'inactive';
         }

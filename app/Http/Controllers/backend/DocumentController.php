@@ -3,15 +3,14 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use App\Models\Document;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class DocumentController extends Controller
 {
     public function upload(Request $request)
-    {        
+    {
         // Validate the request to ensure all necessary data is provided
         $request->validate([
             'file' => 'required|file|mimes:pdf,doc,docx,jpg,png,xls|max:2048',

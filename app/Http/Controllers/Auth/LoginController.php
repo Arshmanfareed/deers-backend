@@ -99,18 +99,23 @@ class LoginController extends Controller
 
         if (Auth::attempt($request->only('email', 'password'))) {
             $user = Auth::user();
-            $token = JWTAuth::fromUser($user);
-            $user_id = $user->id;
-            $user_name = $user->name;
-            $user_role = $user->role;
+            if($user->is_verified === 1){
 
-            return response()->json([
-                'token' => $token, 
-                'message' => 'Login successful', 
-                'user_id' => $user_id, 
-                'user_name' => $user_name,
-                'user_role' => $user_role,
-            ]);
+                $user = Auth::user();
+                $token = JWTAuth::fromUser($user);
+                $user_id = $user->id;
+                $user_name = $user->name;
+                $user_role = $user->role;
+
+                return response()->json([
+                    'token' => $token,
+                    'message' => 'Login successful',
+                    'user_id' => $user_id,
+                    'user_name' => $user_name,
+                    'user_role' => $user_role,
+                ]);
+            }
+            return response()->json(['success' => false, 'message' => 'User Not Verified.'], 401);
         } else {
             return response()->json(['error' => 'Email or Password are incorrect.'], 401);
         }

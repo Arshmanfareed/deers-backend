@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Appointment;
 use App\Models\Departments;
 use App\Models\TimeSlot;
-use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
 {
@@ -21,7 +21,7 @@ class AppointmentController extends Controller
 
     public function store(Request $request)
     {
-        
+
         try {
             $request->validate([
                 'department_id' => 'required|exists:departsments,id',
@@ -41,7 +41,7 @@ class AppointmentController extends Controller
             if ($existingAppointment) {
                 return response()->json(['error' => 'An appointment with the same date and time already exists for this department.'], 409);
             }
-    
+
             // Proceed with creating the appointment
             $appointment = Appointment::create([
                 'department_id' => $request->department_id,
@@ -89,11 +89,11 @@ class AppointmentController extends Controller
         $appointments = Appointment::where('department_id', $departmentId)
                                     ->whereDate('date', $date)
                                     ->get();
-        
+
         // Retrieve the time slots for the department based on the day of the week
         $dayOfWeek = Carbon::parse($date)->format('l');
-        $timeSlots = TimeSlot::where('department_id', $departmentId)->where('day', $dayOfWeek)->get();        
-    
+        $timeSlots = TimeSlot::where('department_id', $departmentId)->where('day', $dayOfWeek)->get();
+
         // If no time slots are found for the day, return an error (assuming weekends or non-working days)
         if ($timeSlots->isEmpty()) {
             return response()->json(['error' => 'No available time slots for this day'], 404);
@@ -119,7 +119,7 @@ class AppointmentController extends Controller
     public function appDepartments()
     {
         $all_data = Departments::all();
-     
+
         return response()->json([
             'message' => 'All Departments',
             'departments' => $all_data,
