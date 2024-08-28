@@ -13,10 +13,10 @@ class AppointmentController extends Controller
 {
     public function index()
     {
-        echo 'sadsadasda';
-        exit;
-        // $appointments = Appointment::all();
-        // return response()->json($appointments);
+        // echo 'sadsadasda';
+        // exit;
+        $appointments = Appointment::all();
+        return response()->json($appointments);
     }
 
     public function store(Request $request)
@@ -71,9 +71,13 @@ class AppointmentController extends Controller
         }
     }
 
-    public function show(Appointment $appointment)
+    public function show($appointment)
     {
-        return response()->json($appointment);
+        // echo $appointment;
+        // exit;
+        $appointments = Appointment::where('user_id', $appointment)->get();
+
+        return response()->json($appointments);
     }
 
     public function checkAvailability($departmentId, $date)
