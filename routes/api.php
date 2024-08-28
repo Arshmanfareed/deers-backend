@@ -18,6 +18,7 @@ Route::post('upload-document', [App\Http\Controllers\backend\DocumentController:
 
 Route::get('app-departments', [AppointmentController::class, 'appDepartments']);
 Route::apiResource('appointments', AppointmentController::class);
+Route::get('user-appointments/{id}', [AppointmentController::class, 'userAppointment']);
 Route::get('/departments/{id}/availability/{date}', [AppointmentController::class, 'checkAvailability']);
 
 Route::prefix('otp')->group(function () {

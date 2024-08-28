@@ -13,9 +13,18 @@ class AppointmentController extends Controller
 {
     public function index()
     {
-        // echo 'sadsadasda';
-        // exit;
         $appointments = Appointment::all();
+        return response()->json($appointments);
+    }
+    
+    public function userAppointment($id)
+    {
+        $appointments = Appointment::where('user_id', $id)->get();      
+          
+        if (!$appointments) {
+            return response()->json(['error' => 'Appointment not found'], 404);
+        }
+
         return response()->json($appointments);
     }
 
@@ -73,9 +82,11 @@ class AppointmentController extends Controller
 
     public function show($appointment)
     {
-        // echo $appointment;
-        // exit;
-        $appointments = Appointment::where('user_id', $appointment)->get();
+        $appointments = Appointment::find($appointment);
+
+        if (!$appointments) {
+            return response()->json(['error' => 'Appointment not found'], 404);
+        }
 
         return response()->json($appointments);
     }
@@ -133,18 +144,39 @@ class AppointmentController extends Controller
     public function update(Request $request, Appointment $appointment)
     {
         $request->validate([
-            'department_id' => 'sometimes|exists:departments,id',
-            'appointment_date' => 'sometimes|date',
+            'department_id' => 'sometimes|exists:departsments,id',
+            'date' => 'sometimes|date',
+            'start_time' => 'sometimes|required_with:end_time',
+            'end_time' => 'sometimes|required_with:start_time',
         ]);
 
-        $appointment->update($request->only(['department_id', 'appointment_date']));
+        // Check if an appointment with the same date, start time, end time, and department already exists
+        if ($request->has(['department_id', 'date', 'start_time', 'end_time'])) {
+            $existingAppointment = Appointment::where('department_id', $request->department_id)
+                ->whereDate('date', $request->date)
+                ->whereTime('start_time', $request->start_time)
+                ->whereTime('end_time', $request->end_time)
+                ->first();
+
+            if ($existingAppointment && $existingAppointment->id !== $appointment->id) {
+                return response()->json(['error' => 'An appointment with the same date and time already exists for this department.'], 409);
+            }
+        }
+
+        $appointment->update($request->only(['department_id', 'date', 'start_time', 'end_time']));
         return response()->json($appointment);
     }
 
-    public function destroy(Appointment $appointment)
+    public function destroy($id)
     {
+        $appointment = Appointment::find($id);
+
+        if (!$appointment) {
+            return response()->json(['error' => 'Appointment not found'], 404);
+        }
+
         $appointment->delete();
-        return response()->json(null, 204);
+        return response()->json(['message' => 'Appointment deleted successfully'], 200);
     }
 }
 
