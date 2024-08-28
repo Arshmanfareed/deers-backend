@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-// use App\Http\Middleware\AdminMiddleware;
 use App\Models\Departments;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+
+// use App\Http\Middleware\AdminMiddleware;
 
 class AdminController extends Controller
 {
@@ -28,18 +29,18 @@ class AdminController extends Controller
 
     public function members()
     {
-        $all_users = User::with('department')->get();       
+        $all_users = User::with('department')->get();
         $data = [
             'title' => 'Members | Deers Admin Dashboard',
             'all_users' => $all_users,
         ];
-    
+
         return view('backend.members', $data);
     }
 
     public function add_members()
     {
-        $alldepartments = Departments::all(); 
+        $alldepartments = Departments::all();
         $data  = [
             'title' => ' Add Members | Deers Admin Dashboard',
             'alldepartments' => $alldepartments,
@@ -49,7 +50,7 @@ class AdminController extends Controller
     }
     public function edit_members(User $user)
     {
-        $alldepartments = Departments::all(); 
+        $alldepartments = Departments::all();
         $data  = [
             'title' => ' Edit Member | Deers Admin Dashboard',
             'alldepartments' => $alldepartments,
@@ -74,7 +75,7 @@ class AdminController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-        
+
         if($request->has('status')){
             $status = 'active';
         }else{
@@ -97,7 +98,7 @@ class AdminController extends Controller
         return redirect()->route('members')->with('success', 'Member updated successfully');
     }
 
-    
+
     public function add_members_submit(Request $request)
     {
         // Validation
