@@ -9,9 +9,9 @@
         <li class="menu-item {{ Request::routeIs('departments') ? 'active' : '' }}">
             <a href="{{ route('departments') }}" class="nav-link">Departments</a>
         </li>
-        <li class="menu-item {{ Request::routeIs('locations') ? 'active' : '' }}">
+        <!-- <li class="menu-item {{ Request::routeIs('locations') ? 'active' : '' }}">
             <a href="{{ route('locations') }}" class="nav-link">Near by Locations</a>
-        </li>
+        </li> -->
         <li class="menu-item {{ Request::routeIs('appointments') ? 'active' : '' }}">
             <a href="{{ route('appointments') }}" class="nav-link">Appointments</a>
         </li>

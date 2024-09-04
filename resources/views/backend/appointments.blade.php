@@ -11,260 +11,81 @@
                 <div class="appoint_area bg_shade">
                     <div class="top_opt">
                         <h2 class="sec_head ft_oswlad">Appointments</h2>
-                        <a href="{{route('add_appointments')}}" class="btn_custom add_member">Add New Appointment</a>
+                        <!-- <a href="{{route('add_appointments')}}" class="btn_custom add_member">Add New Appointment</a> -->
                     </div>
-                    <table class="dt_table table table-bordered table-hover dt-responsive">
+                    <table class="dt_table appintment table table-bordered table-hover dt-responsive">
                         <thead>
                         <tr>
                             <th>Member</th>
                             <th>Department</th>
                             <th>From - To</th>
                             <th>Duration</th>
+                            <th>Appointment Date</th>
                             <th>Created Date</th>
                             <th>Status</th>
-                            <th>Action</th>
+                            <th></th>
                         </tr>
                         </thead>
 
                         <tbody>
+                        @foreach($appointments as $appointment)
+                        <?php
+                        // Convert start_time and end_time to Carbon instances
+                        $startTime = \Carbon\Carbon::parse($appointment['start_time']);
+                        $endTime = \Carbon\Carbon::parse($appointment['end_time']);
+                        
+                        // Calculate the difference in hours and minutes
+                        $duration = $startTime->diff($endTime);
 
+                        // Get the current time
+                        $currentTime = \Carbon\Carbon::now();
+                            
+                        // Determine the status
+                        if ($currentTime->lt($endTime)) {
+                            $status = 'Scheduled';
+                            $statusClass = 'status red';  // Change status color or class as needed
+                        } else {
+                            $status = 'Completed';  // Or 'Expired', 'Done', etc.
+                            $statusClass = 'status green';  // Change status color or class as needed
+                        }
+
+                        // Format the start_time and end_time to 12-hour format with AM/PM
+                        $formattedStartTime = $startTime->format('h:i A');
+                        $formattedEndTime = $endTime->format('h:i A');
+                        ?>
                         <tr>
                             <td>
                                 <div class="user_col">
-                                    <img class="thumb" src="{{asset('dashboard_assets/images/thumb.png')}}" alt="">
-                                    Lorem ipsum dolor sit amet
+                                    <!-- <img class="thumb" src="{{asset('dashboard_assets/images/thumb.png')}}" alt=""> -->
+                                    {{ $appointment['department']['name']; }}
                                 </div>
                             </td>
-                            <td>Health</td>
-                            <td>09:30 AM - 10:00 AM</td>
-                            <td>33 - 19 - 1</td>
-                            <td>33 - 19 - 1</td>
+                            <td>{{ $appointment['user']['first_name']; }} {{ $appointment['user']['last_name']; }}</td>
+                            <!-- <td>{{ $appointment['start_time']; }} - {{ $appointment['end_time']; }}</td> -->
+                            <td>{{ $formattedStartTime }} - {{ $formattedEndTime }}</td>
+                            <td>{{ $duration->h }}h {{ $duration->i }}m</td>
+                            <td>{{ $appointment['date']; }}</td>
+                            <td>{{ $appointment['created_at']; }}</td>
                             <td>
-                                <div class="status red">Scheduled</div>
+                                <div class="{{ $statusClass }}">{{ $status }}</div>
                             </td>
                             <td>
-                                <a href="javascript:;" class="action_link">
+                                <!-- <a href="javascript:;" class="action_link">
                                     <img src="{{asset('dashboard_assets/images/icon_action.png')}}" alt="">
                                 </a>
                                 <div class="actions">
                                     <a href="javascript:;" class="viiew"><span class="icon"><i class="fa-solid fa-eye"></i></span>View</a>
                                     <a href="javascript:;" class="edit"><span class="icon"><i class="fa-solid fa-pen-to-square"></i></span>Edit</a>
                                     <a href="javascript:;" class="delete"><span class="icon"><i class="fa-solid fa-trash"></i></span>Delete</a>
-                                </div>
+                                </div> -->
                             </td>
                         </tr>
 
+                        @endforeach
 
 
 
-
-                        <tr>
-                            <td>
-                                <div class="user_col">
-                                    <img class="thumb" src="{{asset('dashboard_assets/images/thumb_2.png')}}" alt="">
-                                    Lorem ipsum dolor sit amet
-                                </div>
-                            </td>
-                            <td>Defense</td>
-                            <td>09:30 AM - 10:00 AM</td>
-                            <td>33 - 19 - 1</td>
-                            <td>33 - 19 - 1</td>
-                            <td>
-                                <div class="status green">Completed</div>
-                            </td>
-                            <td>
-                                <a href="javascript:;" class="action_link">
-                                    <img src="{{asset('dashboard_assets/images/icon_action.png')}}" alt="">
-                                </a>
-                                <div class="actions">
-                                    <a href="javascript:;" class="viiew"><span class="icon"><i class="fa-solid fa-eye"></i></span>View</a>
-                                    <a href="javascript:;" class="edit"><span class="icon"><i class="fa-solid fa-pen-to-square"></i></span>Edit</a>
-                                    <a href="javascript:;" class="delete"><span class="icon"><i class="fa-solid fa-trash"></i></span>Delete</a>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <div class="user_col">
-                                    <img class="thumb" src="{{asset('dashboard_assets/images/thumb_3.png')}}" alt="">
-                                    Lorem ipsum dolor sit amet
-                                </div>
-                            </td>
-                            <td>Defense</td>
-                            <td>09:30 AM - 10:00 AM</td>
-                            <td>33 - 19 - 1</td>
-                            <td>33 - 19 - 1</td>
-                            <td>
-                                <div class="status green">Completed</div>
-                            </td>
-                            <td>
-                                <a href="javascript:;" class="action_link">
-                                    <img src="{{asset('dashboard_assets/images/icon_action.png')}}" alt="">
-                                </a>
-                                <div class="actions">
-                                    <a href="javascript:;" class="viiew"><span class="icon"><i class="fa-solid fa-eye"></i></span>View</a>
-                                    <a href="javascript:;" class="edit"><span class="icon"><i class="fa-solid fa-pen-to-square"></i></span>Edit</a>
-                                    <a href="javascript:;" class="delete"><span class="icon"><i class="fa-solid fa-trash"></i></span>Delete</a>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <div class="user_col">
-                                    <img class="thumb" src="{{asset('dashboard_assets/images/thumb_4.png')}}" alt="">
-                                    Lorem ipsum dolor sit amet
-                                </div>
-                            </td>
-                            <td>Civilian Pay</td>
-                            <td>09:30 AM - 10:00 AM</td>
-                            <td>33 - 19 - 1</td>
-                            <td>33 - 19 - 1</td>
-                            <td>
-                                <div class="status green">Completed</div>
-                            </td>
-                            <td>
-                                <a href="javascript:;" class="action_link">
-                                    <img src="{{asset('dashboard_assets/images/icon_action.png')}}" alt="">
-                                </a>
-                                <div class="actions">
-                                    <a href="javascript:;" class="viiew"><span class="icon"><i class="fa-solid fa-eye"></i></span>View</a>
-                                    <a href="javascript:;" class="edit"><span class="icon"><i class="fa-solid fa-pen-to-square"></i></span>Edit</a>
-                                    <a href="javascript:;" class="delete"><span class="icon"><i class="fa-solid fa-trash"></i></span>Delete</a>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <div class="user_col">
-                                    <img class="thumb" src="{{asset('dashboard_assets/images/thumb_5.png')}}" alt="">
-                                    Lorem ipsum dolor sit amet
-                                </div>
-                            </td>
-                            <td>Civilian Pay</td>
-                            <td>09:30 AM - 10:00 AM</td>
-                            <td>33 - 19 - 1</td>
-                            <td>33 - 19 - 1</td>
-                            <td>
-                                <div class="status green">Completed</div>
-                            </td>
-                            <td>
-                                <a href="javascript:;" class="action_link">
-                                    <img src="{{asset('dashboard_assets/images/icon_action.png')}}" alt="">
-                                </a>
-                                <div class="actions">
-                                    <a href="javascript:;" class="viiew"><span class="icon"><i class="fa-solid fa-eye"></i></span>View</a>
-                                    <a href="javascript:;" class="edit"><span class="icon"><i class="fa-solid fa-pen-to-square"></i></span>Edit</a>
-                                    <a href="javascript:;" class="delete"><span class="icon"><i class="fa-solid fa-trash"></i></span>Delete</a>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <div class="user_col">
-                                    <img class="thumb" src="{{asset('dashboard_assets/images/thumb_6.png')}}" alt="">
-                                    Lorem ipsum dolor sit amet
-                                </div>
-                            </td>
-                            <td>Health</td>
-                            <td>09:30 AM - 10:00 AM</td>
-                            <td>33 - 19 - 1</td>
-                            <td>33 - 19 - 1</td>
-                            <td>
-                                <div class="status green">Completed</div>
-                            </td>
-                            <td>
-                                <a href="javascript:;" class="action_link">
-                                    <img src="{{asset('dashboard_assets/images/icon_action.png')}}" alt="">
-                                </a>
-                                <div class="actions">
-                                    <a href="javascript:;" class="viiew"><span class="icon"><i class="fa-solid fa-eye"></i></span>View</a>
-                                    <a href="javascript:;" class="edit"><span class="icon"><i class="fa-solid fa-pen-to-square"></i></span>Edit</a>
-                                    <a href="javascript:;" class="delete"><span class="icon"><i class="fa-solid fa-trash"></i></span>Delete</a>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <div class="user_col">
-                                    <img class="thumb" src="{{asset('dashboard_assets/images/thumb_7.png')}}" alt="">
-                                    Lorem ipsum dolor sit amet
-                                </div>
-                            </td>
-                            <td>Civilian Pay</td>
-                            <td>09:30 AM - 10:00 AM</td>
-                            <td>33 - 19 - 1</td>
-                            <td>33 - 19 - 1</td>
-                            <td>
-                                <div class="status green">Completed</div>
-                            </td>
-                            <td>
-                                <a href="javascript:;" class="action_link">
-                                    <img src="{{asset('dashboard_assets/images/icon_action.png')}}" alt="">
-                                </a>
-                                <div class="actions">
-                                    <a href="javascript:;" class="viiew"><span class="icon"><i class="fa-solid fa-eye"></i></span>View</a>
-                                    <a href="javascript:;" class="edit"><span class="icon"><i class="fa-solid fa-pen-to-square"></i></span>Edit</a>
-                                    <a href="javascript:;" class="delete"><span class="icon"><i class="fa-solid fa-trash"></i></span>Delete</a>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <div class="user_col">
-                                    <img class="thumb" src="{{asset('dashboard_assets/images/thumb_8.png')}}" alt="">
-                                    Lorem ipsum dolor sit amet
-                                </div>
-                            </td>
-                            <td>Verifaction</td>
-                            <td>09:30 AM - 10:00 AM</td>
-                            <td>33 - 19 - 1</td>
-                            <td>33 - 19 - 1</td>
-                            <td>
-                                <div class="status green">Completed</div>
-                            </td>
-                            <td>
-                                <a href="javascript:;" class="action_link">
-                                    <img src="{{asset('dashboard_assets/images/icon_action.png')}}" alt="">
-                                </a>
-                                <div class="actions">
-                                    <a href="javascript:;" class="viiew"><span class="icon"><i class="fa-solid fa-eye"></i></span>View</a>
-                                    <a href="javascript:;" class="edit"><span class="icon"><i class="fa-solid fa-pen-to-square"></i></span>Edit</a>
-                                    <a href="javascript:;" class="delete"><span class="icon"><i class="fa-solid fa-trash"></i></span>Delete</a>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <div class="user_col">
-                                    <img class="thumb" src="{{asset('dashboard_assets/images/thumb_9.png')}}" alt="">
-                                    Lorem ipsum dolor sit amet
-                                </div>
-                            </td>
-                            <td>Verifaction</td>
-                            <td>09:30 AM - 10:00 AM</td>
-                            <td>33 - 19 - 1</td>
-                            <td>33 - 19 - 1</td>
-                            <td>
-                                <div class="status green">Completed</div>
-                            </td>
-                            <td>
-                                <a href="javascript:;" class="action_link">
-                                    <img src="{{asset('dashboard_assets/images/icon_action.png')}}" alt="">
-                                </a>
-                                <div class="actions">
-                                    <a href="javascript:;" class="viiew"><span class="icon"><i class="fa-solid fa-eye"></i></span>View</a>
-                                    <a href="javascript:;" class="edit"><span class="icon"><i class="fa-solid fa-pen-to-square"></i></span>Edit</a>
-                                    <a href="javascript:;" class="delete"><span class="icon"><i class="fa-solid fa-trash"></i></span>Delete</a>
-                                </div>
-                            </td>
-                        </tr>
+                        
 
                         </tbody>
 

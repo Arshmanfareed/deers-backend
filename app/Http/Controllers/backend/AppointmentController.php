@@ -13,13 +13,13 @@ class AppointmentController extends Controller
 {
     public function index()
     {
-        $appointments = Appointment::all();
+        $appointments = Appointment::with(['department', 'user'])->get();
         return response()->json($appointments);
     }
     
     public function userAppointment($id)
     {
-        $appointments = Appointment::where('user_id', $id)->get();      
+        $appointments = Appointment::where('user_id', $id)->with(['department', 'user'])->get();      
           
         if (!$appointments) {
             return response()->json(['error' => 'Appointment not found'], 404);
@@ -82,7 +82,7 @@ class AppointmentController extends Controller
 
     public function show($appointment)
     {
-        $appointments = Appointment::find($appointment);
+        $appointments = Appointment::with(['department', 'user'])->find($appointment);
 
         if (!$appointments) {
             return response()->json(['error' => 'Appointment not found'], 404);

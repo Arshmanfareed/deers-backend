@@ -4,6 +4,7 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Departments;
+use App\Models\Appointment;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -150,9 +151,12 @@ class AdminController extends Controller
 
     public function appointments()
     {
+        // $appointments = Appointment::get();
+        $appointments = Appointment::with(['department', 'user'])->get();
+        
         $data  = [
-
-            'title' => ' Appointments | Deers Admin Dashboard'
+            'title' => ' Appointments | Deers Admin Dashboard',
+            'appointments' => $appointments,
         ];
 
         return view('backend.appointments' ,$data);
