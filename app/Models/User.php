@@ -70,6 +70,10 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->getKey();
     }
+    public function userSubscriptions()
+    {
+        return $this->hasMany(UserSubscription::class);
+    }
 
     /**
      * Return a key value array, containing any custom claims to be added to the JWT.

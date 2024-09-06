@@ -9,6 +9,7 @@ class SubscriptionSeeder extends Seeder
 {
     public function run()
     {
+ 
         Subscription::create([
             'name' => 'Free Plan',
             'price' => 0.00,

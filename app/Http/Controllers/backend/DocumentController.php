@@ -6,20 +6,53 @@ use App\Http\Controllers\Controller;
 use App\Models\Document;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Models\User;
+
 
 class DocumentController extends Controller
 {
     public function upload(Request $request)
     {
-        // Validate the request to ensure all necessary data is provided       
-        
+        // Validate the request to ensure all necessary data is provided
         $request->validate([
             'file' => 'required|file|mimes:pdf,doc,docx,jpg,png,xls,xlsx|max:50000',
             'user_id' => 'required|integer|exists:users,id',
             'department' => 'required|string|max:255',
         ]);
-        // echo $request->user_id;
-        // exit;
+
+        // Fetch user and their subscription details
+        $user = User::find($request->user_id);
+        $subscription = $user->userSubscriptions()->first(); // assuming the user has a 'userSubscription' relationship
+        // dd($subscription);
+
+        // Check if the user has an active subscription
+        if (!$subscription || $subscription->end_date < now()) {
+            return response()->json([
+                'message' => 'Your subscription has expired or is invalid',
+            ], 403);
+        }
+
+        // Get plan details
+        $plan = $subscription->subscriptionPlan->name;
+
+        // Handle restrictions based on plan
+        if ($plan === 'Free Plan') {
+            return response()->json([
+                'message' => 'Document upload is not allowed for the Free Plan',
+            ], 403);
+        } elseif ($plan === 'Pro Plan') {
+            // Check how many documents the user has uploaded this month
+            $currentMonthUploads = Document::where('user_id', $user->id)
+                ->whereMonth('created_at', now()->month)
+                ->count();
+
+            if ($currentMonthUploads >= 2) {
+                return response()->json([
+                    'message' => 'You have reached the maximum document upload limit for the Pro Plan this month (2 documents)',
+                ], 403);
+            }
+        }
+
         // Handle the file upload
         if ($request->hasFile('file')) {
             $file = $request->file('file');
@@ -50,4 +83,5 @@ class DocumentController extends Controller
             'message' => 'No file uploaded',
         ], 400);
     }
+
 }
