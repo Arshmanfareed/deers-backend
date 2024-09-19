@@ -15,6 +15,10 @@ use App\Http\Controllers\Auth\RegisterController;
 Route::post('app-register', [App\Http\Controllers\Auth\RegisterController::class, 'apiRegister']);
 Route::post('app-login', [App\Http\Controllers\Auth\LoginController::class, 'appLogin']);
 Route::post('upload-document', [App\Http\Controllers\backend\DocumentController::class, 'upload']);
+Route::get('user-document', [App\Http\Controllers\backend\DocumentController::class, 'userDocs']);
+Route::get('department-users', [App\Http\Controllers\backend\AppointmentController::class, 'departmentUers']);
+Route::get('department-appointmnets', [App\Http\Controllers\backend\AppointmentController::class, 'departmentAppointmnets']);
+Route::post('appointments-approve-disapprove/{id}', [App\Http\Controllers\backend\AppointmentController::class, 'approveDisapprove']);
 
 Route::get('app-departments', [AppointmentController::class, 'appDepartments']);
 Route::apiResource('appointments', AppointmentController::class);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\backend;
 use App\Http\Controllers\Controller;
 use App\Models\Appointment;
 use App\Models\Departments;
+use App\Models\User;
 use App\Models\TimeSlot;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -16,6 +17,47 @@ class AppointmentController extends Controller
         $appointments = Appointment::with(['department', 'user'])->get();
         return response()->json($appointments);
     }
+
+    public function departmentUers(Request $request)
+    {   
+        // Retrieve users based on the department_id
+        $dep_users = User::where('department_id', $request->department_id)->get();
+
+        // Check if users are found
+        if ($dep_users->isEmpty()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'No users found for this department.',
+            ], 404);
+        }
+
+        // Return a proper JSON response with status and data
+        return response()->json([
+            'status' => 'success',
+            'data' => $dep_users,
+        ], 200);
+    }
+
+    public function departmentAppointmnets(Request $request)
+    {   
+        // Retrieve users based on the department_id
+        $dep_appointmnets = Appointment::where('department_id', $request->department_id)->with(['department', 'user'])->get();
+
+        // Check if users are found
+        if ($dep_appointmnets->isEmpty()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'No Appointmnets found for this department.',
+            ], 404);
+        }
+
+        // Return a proper JSON response with status and data
+        return response()->json([
+            'status' => 'success',
+            'data' => $dep_appointmnets,
+        ], 200);
+    }
+
     
     public function userAppointment($id)
     {
@@ -58,6 +100,7 @@ class AppointmentController extends Controller
                 'date' => $request->date,
                 'start_time' => $request->start_time,
                 'end_time' => $request->end_time,
+                'status' => 'awaited',
             ]);
 
             $department = Departments::find($request->department_id);
@@ -78,6 +121,24 @@ class AppointmentController extends Controller
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json($e->errors(), 422);
         }
+    }
+
+    public function approveDisapprove(Request $request, $id)
+    {
+        $appointment = Appointment::find($id);
+
+        if (!$appointment) {
+            return response()->json(['error' => 'Appointment not found.'], 404);
+        }
+
+        $request->validate([
+            'status' => 'required|in:awaited,approved,disapproved',
+        ]);
+
+        $appointment->status = $request->status;
+        $appointment->save();
+
+        return response()->json(['message' => 'Appointment status updated successfully.']);
     }
 
     public function show($appointment)

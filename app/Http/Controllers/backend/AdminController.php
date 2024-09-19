@@ -91,6 +91,8 @@ class AdminController extends Controller
             'email' => $request->email,
             'department_id' => $request->department,
             'phone_number' => $request->phone_number,
+            'rank' => $request->rank,
+            'branch' => $request->branch,
             'role' => $request->role,
             'status' => $status,
             'password' => $request->password ? Hash::make($request->password) : $user->password,
@@ -124,6 +126,8 @@ class AdminController extends Controller
             'email' => $request->email,
             'department_id' => $request->department,
             'phone_number' => $request->phone_number,
+            'rank' => $request->rank,
+            'branch' => $request->branch,
             'role' => $request->role,
             'password' => Hash::make($request->password),
         ]);

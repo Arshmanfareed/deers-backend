@@ -73,6 +73,57 @@
                                     </select>
                                 </div>
                             </div>
+
+                            <div class="col-12 col-md-6">
+                                <div class="field drop_down">
+                                    <label for="Ranks">Select Ranks</label>
+                                    <select class="form-control" name="rank" id="Ranks">
+                                        <option value="" disabled selected>Select Ranks</option>
+                                        <!-- Enlisted Ranks -->
+                                        <option value="E1" {{ old('rank', $user->rank) == 'E1' ? 'selected' : '' }}>E1</option>
+                                        <option value="E2" {{ old('rank', $user->rank) == 'E2' ? 'selected' : '' }}>E2</option>
+                                        <option value="E3" {{ old('rank', $user->rank) == 'E3' ? 'selected' : '' }}>E3</option>
+                                        <option value="E4" {{ old('rank', $user->rank) == 'E4' ? 'selected' : '' }}>E4</option>
+                                        <option value="E5" {{ old('rank', $user->rank) == 'E5' ? 'selected' : '' }}>E5</option>
+                                        <option value="E6" {{ old('rank', $user->rank) == 'E6' ? 'selected' : '' }}>E6</option>
+                                        <option value="E7" {{ old('rank', $user->rank) == 'E7' ? 'selected' : '' }}>E7</option>
+                                        <option value="E8" {{ old('rank', $user->rank) == 'E8' ? 'selected' : '' }}>E8</option>
+                                        <option value="E9" {{ old('rank', $user->rank) == 'E9' ? 'selected' : '' }}>E9</option>
+                                        <!-- Officer Ranks -->
+                                        <option value="O1" {{ old('rank', $user->rank) == 'O1' ? 'selected' : '' }}>O1</option>
+                                        <option value="O2" {{ old('rank', $user->rank) == 'O2' ? 'selected' : '' }}>O2</option>
+                                        <option value="O3" {{ old('rank', $user->rank) == 'O3' ? 'selected' : '' }}>O3</option>
+                                        <option value="O4" {{ old('rank', $user->rank) == 'O4' ? 'selected' : '' }}>O4</option>
+                                        <option value="O5" {{ old('rank', $user->rank) == 'O5' ? 'selected' : '' }}>O5</option>
+                                        <option value="O6" {{ old('rank', $user->rank) == 'O6' ? 'selected' : '' }}>O6</option>
+                                        <option value="O7" {{ old('rank', $user->rank) == 'O7' ? 'selected' : '' }}>O7</option>
+                                        <option value="O8" {{ old('rank', $user->rank) == 'O8' ? 'selected' : '' }}>O8</option>
+                                        <option value="O9" {{ old('rank', $user->rank) == 'O9' ? 'selected' : '' }}>O9</option>
+                                        <option value="O10" {{ old('rank', $user->rank) == 'O10' ? 'selected' : '' }}>O10</option>
+                                        <!-- Warrant Officer Ranks -->
+                                        <option value="WO1" {{ old('rank', $user->rank) == 'WO1' ? 'selected' : '' }}>WO1</option>
+                                        <option value="WO2" {{ old('rank', $user->rank) == 'WO2' ? 'selected' : '' }}>WO2</option>
+                                        <option value="WO3" {{ old('rank', $user->rank) == 'WO3' ? 'selected' : '' }}>WO3</option>
+                                        <option value="WO4" {{ old('rank', $user->rank) == 'WO4' ? 'selected' : '' }}>WO4</option>
+                                        <option value="WO5" {{ old('rank', $user->rank) == 'WO5' ? 'selected' : '' }}>WO5</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <div class="field drop_down">
+                                    <label for="branchs">Select Branchs</label>
+                                    <select class="form-control" name="branch" id="branchs">
+                                        <option value="" disabled selected>Select Branchs</option>
+                                        <option value="Army" {{ old('branch', $user->branch) == 'Army' ? 'selected' : '' }}>Army</option>
+                                        <option value="Navy" {{ old('branch', $user->branch) == 'Navy' ? 'selected' : '' }}>Navy</option>
+                                        <option value="Airforce" {{ old('branch', $user->branch) == 'Airforce' ? 'selected' : '' }}>Airforce</option>
+                                        <option value="Marine" {{ old('branch', $user->branch) == 'Marine' ? 'selected' : '' }}>Marine</option>
+                                        <option value="Costguard" {{ old('branch', $user->branch) == 'Costguard' ? 'selected' : '' }}>Costguard</option>
+                                        <option value="Space Force" {{ old('branch', $user->branch) == 'Space Force' ? 'selected' : '' }}>Space Force</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col-12">
                                 <div class="field">
                                     <label for="email">Email</label>

@@ -74,6 +74,58 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="field drop_down">
+                                    <label for="Ranks">Select Ranks</label>
+                                    <select class="form-control" name="rank" id="Ranks">
+                                        <option value="" disabled selected>Select Ranks</option>
+                                        <!-- Enlisted Ranks -->
+                                        <option value="E1">E1</option>
+                                        <option value="E2">E2</option>
+                                        <option value="E3">E3</option>
+                                        <option value="E4">E4</option>
+                                        <option value="E5">E5</option>
+                                        <option value="E6">E6</option>
+                                        <option value="E7">E7</option>
+                                        <option value="E8">E8</option>
+                                        <option value="E9">E9</option>
+                                        <!-- Officer Ranks -->
+                                        <option value="O1">O1</option>
+                                        <option value="O2">O2</option>
+                                        <option value="O3">O3</option>
+                                        <option value="O4">O4</option>
+                                        <option value="O5">O5</option>
+                                        <option value="O6">O6</option>
+                                        <option value="O7">O7</option>
+                                        <option value="O8">O8</option>
+                                        <option value="O9">O9</option>
+                                        <option value="O10">O10</option>
+                                        <!-- Warrant Officer Ranks -->
+                                        <option value="WO1">WO1</option>
+                                        <option value="WO2">WO2</option>
+                                        <option value="WO3">WO3</option>
+                                        <option value="WO4">WO4</option>
+                                        <option value="WO5">WO5</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="field drop_down">
+                                    <label for="branchs">Select Branchs</label>
+                                    <select class="form-control" name="branch" id="branchs">
+                                        <option value="" disabled selected>Select Branchs</option>
+                                        <option value="Army">Army</option>
+                                        <option value="Navy">Navy</option>
+                                        <option value="Airforce">Airforce</option>
+                                        <option value="Marine">Marine</option>
+                                        <option value="Costguard">Costguard</option>
+                                        <option value="space force">Space Force</option>
+                                    
+                                        
+                                    </select>
+                                </div>
+                            </div>
+                            
                             <div class="col-12">
                                 <div class="field">
                                     <label for="email">Email</label>
