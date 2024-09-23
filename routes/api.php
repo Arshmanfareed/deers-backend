@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\backend\AppointmentController;
 use App\Http\Controllers\backend\DepartmentController;
+use App\Http\Controllers\backend\AnnouncementController;
 use App\Http\Controllers\Auth\RegisterController;
 
 
@@ -19,6 +20,9 @@ Route::get('user-document', [App\Http\Controllers\backend\DocumentController::cl
 Route::get('department-users', [App\Http\Controllers\backend\AppointmentController::class, 'departmentUers']);
 Route::get('department-appointmnets', [App\Http\Controllers\backend\AppointmentController::class, 'departmentAppointmnets']);
 Route::post('appointments-approve-disapprove/{id}', [App\Http\Controllers\backend\AppointmentController::class, 'approveDisapprove']);
+Route::post('/announcements', [AnnouncementController::class, 'store']);
+Route::get('/announcements/department/{department_id}', [AnnouncementController::class, 'getByDepartment']);
+Route::get('/announcements/all-departments', [AnnouncementController::class, 'allDepartments']);
 
 Route::get('app-departments', [AppointmentController::class, 'appDepartments']);
 Route::apiResource('appointments', AppointmentController::class);
