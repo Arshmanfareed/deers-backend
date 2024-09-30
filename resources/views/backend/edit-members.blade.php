@@ -124,7 +124,14 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-12">
+
+                            <div class="col-md-6">
+                                <div class="field">
+                                    <label for="years_of_experience">Years Of Experience</label>
+                                    <input type="number" class="form-control" id="years_of_experience" value="{{ old('years_of_experience', $user->years_of_experience) }}" name="years_of_experience" placeholder="Years Of Experience" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-6">
                                 <div class="field">
                                     <label for="email">Email</label>
                                     <input type="email" class="form-control" id="email" name="email" readonly value="{{ old('email', $user->email) }}" placeholder="Darrell.steward345@gmail.com" autocomplete="off">
