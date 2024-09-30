@@ -83,5 +83,25 @@ class DocumentController extends Controller
             'message' => 'No file uploaded',
         ], 400);
     }
+    
+    public function userDocs(Request $request)
+    {
+        $user_id = $request->user_id;
+        $user_docs = Document::where('user_id', $user_id)->get();
+
+        if ($user_docs->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'No documents found for this user.',
+                'data' => []
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'User documents retrieved successfully.',
+            'data' => $user_docs
+        ], 200);
+    }
 
 }

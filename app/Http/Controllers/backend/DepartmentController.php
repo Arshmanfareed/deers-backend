@@ -5,6 +5,7 @@ namespace App\Http\Controllers\backend;
 use App\Http\Controllers\Controller;
 use App\Models\Departments;
 use App\Models\TimeSlot;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -29,9 +30,6 @@ class DepartmentController extends Controller
 
         return view('backend.departments' ,$data, compact('all_data'));
     }
-
-
-
 
     public function add_departments()
     {
