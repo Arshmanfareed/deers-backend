@@ -15,7 +15,7 @@ class EquipmentController extends Controller
     // Get All Equipments
     public function index()
     {
-        $equipments = Equipment::all();
+        $equipments = Equipment::with(['department', 'user'])->get();
         return response()->json($equipments);
     }
 
@@ -29,7 +29,7 @@ class EquipmentController extends Controller
         }
 
         // Equipment ko department_id ke basis par retrieve karna
-        $equipments = Equipment::where('department_id', $department_id)->get();
+        $equipments = Equipment::where('department_id', $department_id)->with(['department', 'user'])->get();
         
         // Agar equipments nahi milte hain to 404 response dena
         if ($equipments->isEmpty()) {
@@ -38,14 +38,14 @@ class EquipmentController extends Controller
         
         return response()->json($equipments);
     }
-
-
+ 
     // Create Equipment
     public function store(Request $request)
     {
         try {
             $validatedData = $request->validate([
                 'title' => 'required|string|max:255',
+                'user_id' => 'required|exists:users,id',  // Spelling mistake fixed
                 'department_id' => 'required|exists:departsments,id',  // Spelling mistake fixed
                 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 'description' => 'nullable|string',
@@ -68,11 +68,13 @@ class EquipmentController extends Controller
     // Get Single Equipment
     public function show($id)
     {
-        $equipment = Equipment::findOrFail($id);
+        $equipment = Equipment::find($id);
 
         if (!$equipment) {
             return response()->json(['message' => 'Equipment not found.'], 404);
         }
+
+        $equipment = Equipment::where('id', $id)->with(['department', 'user'])->get();        
         return response()->json($equipment);
     }
 
@@ -81,7 +83,7 @@ class EquipmentController extends Controller
     {
         try {
             
-            $equipment = Equipment::findOrFail($id);
+            $equipment = Equipment::find($id);
 
             // dd($equipment);
             if (!$equipment) {
@@ -90,6 +92,7 @@ class EquipmentController extends Controller
             // dd($equipment);
             $validatedData = $request->validate([
                 'title' => 'required|string|max:255',
+                'user_id' => 'required|exists:users,id',
                 'department_id' => 'required|exists:departsments,id',  // Spelling mistake fixed
                 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 'description' => 'nullable|string',
